@@ -1,0 +1,227 @@
+PROCESSOR 16F887
+#include <xc.inc>
+    
+    ;CONFIG word1
+    CONFIG FOSC = INTRC_NOCLKOUT
+    CONFIG WDTE = OFF
+    CONFIG PWRTE = ON
+    CONFIG MCLRE = OFF
+    CONFIG CP = OFF
+    CONFIG CPD = OFF
+    CONFIG BOREN = OFF
+    CONFIG IESO = OFF
+    CONFIG FCMEN = ON
+    CONFIG DEBUG = ON
+
+    ;CONFIG word2
+    CONFIG BOR4V=BOR40V
+    CONFIG WRT = OFF
+    
+    PSECT udata
+ 
+ pausa:
+    DS 1
+ pausa2:
+    DS 1
+
+PSECT resetVEC, class=CODE, delta=2
+    
+    resetvec:
+    PAGESEL main
+    goto main
+    
+PSECT code
+ numero0:
+    BANKSEL ANSEL
+    CLRF ANSEL
+    BANKSEL TRISA
+    CLRF TRISA
+    BANKSEL PORTA
+    CLRF PORTA
+    movlw 0x7E ;01111110
+    movwf PORTA
+    PAGESEL main
+    return
+
+PSECT code
+    numero1:
+    BANKSEL ANSEL
+    clrf ANSEL
+    BANKSEL TRISA
+    clrf TRISA
+    BANKSEL PORTA 
+    clrf PORTA
+    movlw 0x30
+    movwf PORTA
+    PAGESEL main
+    return
+    
+PSECT code
+    numero2:
+    BANKSEL ANSEL
+    clrf ANSEL
+    BANKSEL TRISA
+    clrf TRISA
+    BANKSEL PORTA 
+    clrf PORTA
+    movlw 0x6D
+    movwf PORTA
+    PAGESEL main
+    return
+    
+PSECT code
+    numero3:
+    BANKSEL ANSEL
+    clrf ANSEL
+    BANKSEL TRISA
+    clrf TRISA
+    BANKSEL PORTA 
+    clrf PORTA
+    movlw 0x79
+    movwf PORTA
+    PAGESEL main
+    return
+    
+PSECT code
+    numero4:
+    BANKSEL ANSEL
+    clrf ANSEL
+    BANKSEL TRISA
+    clrf TRISA
+    BANKSEL PORTA 
+    clrf PORTA
+    movlw 0x33
+    movwf PORTA
+    PAGESEL main
+    return
+    
+PSECT code
+    numero5:
+    BANKSEL ANSEL
+    clrf ANSEL
+    BANKSEL TRISA
+    clrf TRISA
+    BANKSEL PORTA 
+    clrf PORTA
+    movlw 0x5B
+    movwf PORTA
+    PAGESEL main
+    return
+    
+PSECT code
+    numero6:
+    BANKSEL ANSEL
+    clrf ANSEL
+    BANKSEL TRISA
+    clrf TRISA
+    BANKSEL PORTA 
+    clrf PORTA
+    movlw 0x5F
+    movwf PORTA
+    PAGESEL main
+    return
+    
+PSECT code
+    numero7:
+    BANKSEL ANSEL
+    clrf ANSEL
+    BANKSEL TRISA
+    clrf TRISA
+    BANKSEL PORTA 
+    clrf PORTA
+    movlw 0x70
+    movwf PORTA
+    PAGESEL main
+    return
+    
+PSECT code
+    numero8:
+    BANKSEL ANSEL
+    clrf ANSEL
+    BANKSEL TRISA
+    clrf TRISA
+    BANKSEL PORTA 
+    clrf PORTA
+    movlw 0x7F 
+    movwf PORTA
+    PAGESEL main
+    return
+    
+PSECT code
+    numero9:
+    BANKSEL ANSEL
+    clrf ANSEL
+    BANKSEL TRISA
+    clrf TRISA
+    BANKSEL PORTA 
+    clrf PORTA
+    movlw 0x7B 
+    movwf PORTA
+    PAGESEL main
+    return    
+    
+    
+    
+PSECT code
+ delay:
+    bcf STATUS, 6
+    bcf STATUS, 5
+    movlw 0x1
+    movwf 0x20
+    incremento0:
+    incfsz 0x20, f
+    goto incremento0
+    bcf STATUS, 6
+    bcf STATUS, 5
+    movlw 0x1
+    movwf 0x21
+    incremento1:
+    incfsz 0x21, f
+    goto incremento1
+    bcf STATUS, 6
+    bcf STATUS, 5
+    movlw 0x1
+    movwf 0x22
+    incremento2:
+    incfsz 0x22, f
+    btfss 0x22, 3
+    goto incremento2
+    return
+    
+PSECT code
+ main:
+    BANKSEL PORTA
+    clrf PORTA
+    BANKSEL TRISA
+    clrf TRISA
+    BANKSEL OSCCON
+    movlw 0x71
+    movwf OSCCON
+    movlw 0x0
+    movwf PORTA
+    
+    
+    loop:
+PAGESEL numero0
+    call numero0
+    call delay
+    call numero1
+    call delay
+    call numero2
+    call delay
+    call numero3
+    call delay
+    call numero4
+    call delay
+    call numero5
+    call delay
+    call numero6
+    call delay
+    call numero7
+    call delay
+    call numero8
+    call delay
+    call numero9
+    call delay
+    goto loop
+    END
